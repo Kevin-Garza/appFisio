@@ -1,25 +1,36 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 
-const pedidosIcon = require('./assets/pedidos.png');
+const setaIcon = require('./assets/seta.png'); // Importe a imagem da seta
+const cancelarIcon = require('./assets/cancelar.png');
+const xisIcon = require('./assets/xis.png');
 
-export default function Atendimento() {
+export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {/* Adicionando o ícone de menu */}
-        <Ionicons name="menu" size={30} color="white" style={styles.menuIcon} />
-        <Text style={styles.headerText}>Solicitar Atendimento</Text>
+        <TouchableOpacity style={styles.backButton}>
+          {/* Substitua a seta pelo componente Image */}
+          <Image source={setaIcon} style={styles.setaImage} />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Meus Agendamentos</Text>
       </View>
-      
-      {/* Adicionando o contêiner com bordas */}
-      <View style={styles.borderContainer}>
-        {/* Adicionando a imagem abaixo do contêiner azul */}
-        <View style={styles.imageContainer}>
-          <Image source={pedidosIcon} style={styles.image} />
-          {/* Adicionando o texto abaixo da imagem */}
-          <Text style={styles.text}>Enviar Pedido médico:</Text>
+      <View style={styles.contentContainer}>
+        <Image source={cancelarIcon} style={styles.image} />
+        <Text style={styles.cancelText}>Formulário de solicitação de cancelamento:</Text>
+        <View style={styles.textBoxContainer}>
+          <TextInput
+            style={styles.textBox}
+            placeholder="Motivo do cancelamento:"
+            placeholderItalic={true}
+            multiline={true}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.redButton}>
+            <Text style={styles.redButtonText}>Solicitar cancelamento</Text>
+            <Image source={xisIcon} style={styles.closeIcon} />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -27,50 +38,81 @@ export default function Atendimento() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  header: {
-    height: 80,
-    backgroundColor: '#00005D',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row', // Adicionado flexDirection para alinhar o ícone e o texto lado a lado
-  },
-  headerText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 10, // Adicionado margem para separar o ícone do texto
-  },
-  menuIcon: {
-    position: 'absolute',
-    left: 10,
-  },
-  borderContainer: {
-    borderWidth: 1,
-    borderColor: '#D3D3D3',
-    borderRadius: 10,
-    marginHorizontal: 20,
-    marginTop: 20,
-  },
-  imageContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  image: {
-    width: 100,
-    height: 100,
-  },
-  text: {
-    fontSize: 20,
-    color: '#202020',
-    fontFamily: 'Inter',
-    marginLeft: 20,
-    marginRight: 'auto',
-    textAlign: 'left',
-    marginTop: 10,
-    fontWeight: 'bold',
-  },
+    container: {
+      flex: 1,
+      backgroundColor: 'white',
+    },
+    header: {
+      height: 80,
+      backgroundColor: '#00005D',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 10,
+    },
+    backButton: {
+      position: 'absolute',
+      left: 15,
+    },
+    headerText: {
+      color: 'white',
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+    contentContainer: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      marginTop: 35,
+    },
+    image: {
+      width: 80,
+      height: 80,
+    },
+    cancelText: {
+      fontSize: 20,
+      color: '#202020',
+      marginLeft: 40,
+      marginRight: 40,
+      textAlign: 'left',
+      marginTop: 30,
+      fontWeight: 'bold',
+    },
+    textBoxContainer: {
+      width: '80%',
+      borderWidth: 1,
+      borderColor: 'gray',
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      marginTop: 30,
+      padding: 10,
+    },
+    textBox: {
+      fontStyle: 'italic',
+      marginBottom: 200,
+    },
+    buttonContainer: {
+      marginTop: 20,
+    },
+    redButton: {
+      marginTop: -21,
+      height: 50,
+      width: '80%',
+      backgroundColor: '#9B2022',
+      borderBottomEndRadius: 10,
+      borderBottomLeftRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    redButtonText: {
+      color: 'white',
+      fontWeight: 'bold', 
+      marginRight: 'auto',
+      marginLeft: 'auto',
+    },
+    closeIcon: {
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
 });

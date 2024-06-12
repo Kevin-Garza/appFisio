@@ -1,68 +1,43 @@
-  import React, { useState } from 'react';
-  import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-  import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 
-  const pedidosIcon = require('./assets/pedidos.png');
-  const uploadIcon = require('./assets/upload.png');
-  const enviarIcon = require('./assets/enviar.png');
+const setaIcon = require('./assets/seta.png'); // Importe a imagem da seta
+const cancelarIcon = require('./assets/cancelar.png');
+const xisIcon = require('./assets/xis.png');
 
-  export default function Atendimento() {
-    const [primeiraConsulta, setPrimeiraConsulta] = useState(null);
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          {/* Adicionando o ícone de menu */}
-          <Ionicons name="menu" size={30} color="white" style={styles.menuIcon} />
-          <Text style={styles.headerText}>Solicitar Atendimento</Text>
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton}>
+          {/* Substitua a seta pelo componente Image */}
+          <Image source={setaIcon} style={styles.setaImage} />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Meus Agendamentos</Text>
+      </View>
+      <View style={styles.contentContainer}>
+        <Image source={cancelarIcon} style={styles.image} />
+        <Text style={styles.cancelText}>Formulário de solicitação de cancelamento:</Text>
+        <View style={styles.textBoxContainer}>
+          <TextInput
+            style={styles.textBox}
+            placeholder="Motivo do cancelamento:"
+            placeholderItalic={true}
+            multiline={true}
+          />
         </View>
-        
-        {/* Adicionando a imagem abaixo do contêiner azul */}
-        <View style={styles.imageContainer}>
-          <Image source={pedidosIcon} style={styles.image} />
-          {/* Adicionando o texto abaixo da imagem */}
-          <Text style={styles.text}>Enviar Pedido médico:</Text>
-          
-          {/* Adicionando o contêiner com bordas cinzas */}
-          <View style={styles.bottomContainer}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Carregar Documentos:</Text>
-              <Image source={uploadIcon} style={styles.upload} />
-            </TouchableOpacity>
-
-            {/* Componente booleano para primeira consulta */}
-            <View style={styles.booleanContainer}>
-              <Text style={styles.booleanText}>É sua primeira consulta?</Text>
-              <View style={styles.booleanOptions}>
-                <TouchableOpacity
-                  style={[styles.optionButton, primeiraConsulta === 'S' && styles.optionSelected]}
-                  onPress={() => setPrimeiraConsulta('S')}
-                >
-                  <Text style={[styles.optionText, primeiraConsulta === 'S' && styles.optionSelectedText]}>S</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.optionButton, primeiraConsulta === 'N' && styles.optionSelected]}
-                  onPress={() => setPrimeiraConsulta('N')}
-                >
-                  <Text style={[styles.optionText, primeiraConsulta === 'N' && styles.optionSelectedText]}>N</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-
-          {/* Botão abaixo do container bottom */}
-          <TouchableOpacity style={styles.bottomButton}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ color: 'white', fontSize: 16, marginRight: 5 , fontWeight: 'bold'}}>Enviar</Text>
-              <Image source={enviarIcon} style={styles.enviar} />
-            </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.redButton}>
+            <Text style={styles.redButtonText}>Solicitar cancelamento</Text>
+            <Image source={xisIcon} style={styles.closeIcon} />
           </TouchableOpacity>
         </View>
       </View>
-    );
-  }
+    </View>
+  );
+}
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: 'white',
@@ -70,39 +45,40 @@
     header: {
       height: 80,
       backgroundColor: '#00005D',
-      justifyContent: 'center',
+      flexDirection: 'row',
       alignItems: 'center',
-      flexDirection: 'row', // Adicionado flexDirection para alinhar o ícone e o texto lado a lado
+      justifyContent: 'center',
+      paddingHorizontal: 10,
+    },
+    backButton: {
+      position: 'absolute',
+      left: 15,
     },
     headerText: {
       color: 'white',
       fontSize: 18,
       fontWeight: 'bold',
-      marginLeft: 10, // Adicionado margem para separar o ícone do texto
     },
-    menuIcon: {
-      position: 'absolute',
-      left: 10,
-    },
-    imageContainer: {
+    contentContainer: {
+      flex: 1,
+      justifyContent: 'flex-start',
       alignItems: 'center',
       marginTop: 35,
     },
     image: {
-      width: 100,
-      height: 100,
+      width: 80,
+      height: 80,
     },
-    text: {
+    cancelText: {
       fontSize: 20,
       color: '#202020',
-      fontFamily: 'Inter',
       marginLeft: 40,
-      marginRight: 'auto',
+      marginRight: 40,
       textAlign: 'left',
       marginTop: 30,
       fontWeight: 'bold',
     },
-    bottomContainer: {
+    textBoxContainer: {
       width: '80%',
       borderWidth: 1,
       borderColor: 'gray',
@@ -110,69 +86,33 @@
       borderTopRightRadius: 10,
       marginTop: 30,
       padding: 10,
-      paddingBottom: 200,
     },
-    button: {
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      backgroundColor: 'white',
-      borderRadius: 10,
-      paddingVertical: 8, // Alterado o paddingVertical
-      paddingHorizontal: 12, // Alterado o paddingHorizontal
-      borderWidth: 1,
-      borderColor: 'gray',
-    },
-    buttonText: {
-      fontSize: 16,
+    textBox: {
       fontStyle: 'italic',
-      marginLeft: 10,
+      marginBottom: 200,
     },
-    upload: {
-      width: 25,
-      height: 25,
+    buttonContainer: {
+      marginTop: 20,
+    },
+    redButton: {
+      marginTop: -21,
+      height: 50,
+      width: '80%',
+      backgroundColor: '#9B2022',
+      borderBottomEndRadius: 10,
+      borderBottomLeftRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    redButtonText: {
+      color: 'white',
+      fontWeight: 'bold', 
+      marginRight: 'auto',
+      marginLeft: 'auto',
+    },
+    closeIcon: {
       marginLeft: 'auto',
       marginRight: 'auto',
     },
-    booleanContainer: {
-      marginTop: 20,
-    },
-    booleanText: {
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    booleanOptions: {
-      flexDirection: 'row',
-      marginTop: 10,
-    },
-    optionButton: {
-      paddingHorizontal: 10, // Alterado paddingHorizontal
-      paddingVertical: 5, // Alterado paddingVertical
-      borderRadius: 10,
-      marginRight: 10,
-      backgroundColor: '#D3D3D3',
-      borderWidth: 1,
-      borderColor: 'gray',
-    },
-    optionText: {
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    optionSelected: {
-      backgroundColor: '#00005D',
-    },
-    optionSelectedText: {
-      color: 'white',
-    },
-    bottomButton: {
-      backgroundColor: '#00005D',
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius:10,
-      padding: 10,
-      width: '80%',
-      alignItems: 'center',
-    },
-    enviar: {
-      marginRight: 0,
-    }
-  });
+});
